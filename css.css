@@ -1,0 +1,15 @@
+body#the-body {
+    height: 100% !important;
+}
+
+div#output {
+    height: 100% !important;
+}
+
+iframe#result-iframe {
+    height: 100% !important;
+}
+
+html {
+    height: 100% !important;
+}
