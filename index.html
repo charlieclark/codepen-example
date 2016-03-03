@@ -48,39 +48,51 @@
         left: 0;
       }
       
+      .fake-content {
+        width: 30%;
+        height: 100%;
+        background-image: url('./fake-content.png');
+        background-size: contain;
+        background-position: left center;
+        background-repeat: no-repeat;
+        left: 10%;
+        position: absolute;
+      }
+      
     </style>
   </head>
   <body>
     <div class="ui">
       <label>codepen url (replace to update background)</label>
-      <input id="input" value="http://codepen.io/hakimel/pen/KanIi"/>
+      <input id="input"/>
       
       <label>or pick from examples</label>
       <select id="dropdown">
-        <option value="http://codepen.io/hakimel/pen/KanIi">Trail</option>
         <option value="http://codepen.io/kowlor/pen/bpNvVN">Cube Wave</option>
         <option value="http://codepen.io/akm2/pen/rHIsa">gravity points</option>
         <option value="http://codepen.io/halvves/pen/eZYzrj">low poly wolf</option>
         <option value="http://codepen.io/schoenwaldnils/pen/reaWpL">color grid</option>
       </select>
     </div>
-    <div class="overlay"></div>
+    <div class="overlay">
+      <div class="fake-content"></div>
+    </div>
     <script>
     (function(){
-      var node;
+      var iframe;
       var input = document.getElementById("input");
       var dropdown = document.getElementById("dropdown");
       
       function addPen(u, h){
-        if (node) {
-          node.remove();
-          node = null
+        if (iframe) {
+          iframe.remove();
+          iframe = null
         }
         
-        node = document.createElement('iframe');
-        node.src = './frame.html?u=' + u + '&h=' + h;
-        node.id = "my-pen";
-        document.body.appendChild(node);
+        iframe = document.createElement('iframe');
+        iframe.src = './frame.html?u=' + u + '&h=' + h;
+        iframe.id = "my-pen";
+        document.body.appendChild(iframe);
       }
       
       function getPen(){
@@ -96,13 +108,25 @@
         addPen(u, h)
       }
       
-      dropdown.addEventListener('change', function(){
+      function dropdownChange(){
         input.value = dropdown.value;
         input.onchange()
-      });
+      }
       
+      dropdown.onchange = dropdownChange;
       input.onchange = getPen;
-      getPen();
+        
+      dropdownChange();
+      
+      // function passEvent(eName, e){
+      //   
+      // }
+      // 
+      // document.addEventListener('mousemove', function(e){
+      //   passEvent('mousemove', e);
+      //   iframe.dispatchEvent(e);
+      // })
+      // 
     })();
     </script>
   </body>
